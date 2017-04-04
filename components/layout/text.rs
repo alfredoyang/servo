@@ -230,6 +230,15 @@ impl TextRunScanner {
                         None => false
                     };
 
+                    if end_position == 0 {
+                        // This is the first RunInfo for this fragment, so we
+                        // should give it meaningful starting values.
+                        run_info.font_index = font_index;
+                        run_info.bidi_level = bidi_level;
+                        run_info.script = script;
+                        mapping.selected = selected;
+                    }
+
                     // Now, if necessary, flush the mapping we were building up.
                     let flush_run = run_info.font_index != font_index ||
                                     run_info.bidi_level != bidi_level ||
